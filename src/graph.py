@@ -5,7 +5,7 @@ class Edge:
 class Vertex:
     def __init__(self, value, **pos): # TODO: Test default value arguments
         self.value = value
-        self.color = 'blue'
+        self.color = 'pink'
         self.pos = pos
         self.edges = []
 
@@ -15,9 +15,9 @@ class Graph:
 
     def debug_create_test_data(self):
         debug_vertex_1 = Vertex('T1', x = 40, y = 40)
-        debug_vertex_2 = Vertex('T2', x = 140, y = 140)
-        debug_vertex_3 = Vertex('T3', x = 300, y = 400)
-        debug_vertex_4 = Vertex('T4', x = 380, y = 480)
+        debug_vertex_2 = Vertex('T2', x = 200, y = 300)
+        debug_vertex_3 = Vertex('T3', x = 100, y = 475)
+        debug_vertex_4 = Vertex('T4', x = 488, y = 400)
 
         debug_edge_1 = Edge(debug_vertex_2)        
         debug_vertex_1.edges.append(debug_edge_1)
