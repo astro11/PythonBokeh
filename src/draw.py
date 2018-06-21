@@ -59,10 +59,6 @@ graph.layout_provider = StaticLayoutProvider(graph_layout=graph_layout)
 
 plot.renderers.append(graph)
 
-source = ColumnDataSource(data=dict(height=[96, 71, 72, 68, 58, 62],
-                                    weight=[165, 189, 220, 141, 260, 174],
-                                    names=['Mark', 'Amir', 'Matt', 'Greg',
-                                           'Owen', 'Juan']))
 #create a new dict to use as a data source, with three lists in it, ordrered in the same way as vertexes
 # list of x values
 # list of y values
