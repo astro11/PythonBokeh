@@ -32,10 +32,18 @@ graph.node_renderer.data_source.add(color_list, 'color')
 graph.node_renderer.glyph = Oval(height=10, width=10, fill_color='color')
 
 # This is drawing the edges from start to end
+start_indexes = []
+end_indexes = []
+
+for start_index, vertex in enumerate(graph_data.vertexes):
+    for e in vertex.edges:
+        start_indexes.append(start_index)
+        end_indexes.append(graph_data.vertexes.index(e.destination))
+
 # TODO: Change how this works
 graph.edge_renderer.data_source.data = dict(
-    start=[0]*N, # This is a list that has something to do with starting points | Why does it work?
-    end=node_indices) # This is a list that has something to do with ending points | Why does it work?
+    start=start_indexes, # This is a list of vertex indexes to start edges from
+    end=end_indexes) # This is a list of vertex indexes to start edges at
 
 ### start of layout code
 # this is setting the positions of the vertexes
@@ -44,7 +52,7 @@ graph.edge_renderer.data_source.data = dict(
 x = [v.pos['x'] for v in graph_data.vertexes]
 y = [v.pos['y'] for v in graph_data.vertexes]
 
-
+#creating dictionary using dict()
 graph_layout = dict(zip(node_indices, zip(x, y)))
 graph.layout_provider = StaticLayoutProvider(graph_layout=graph_layout)
 
