@@ -2,7 +2,8 @@ import math
 
 from bokeh.io import show, output_file
 from bokeh.plotting import figure
-from bokeh.models import GraphRenderer, StaticLayoutProvider, Oval
+from bokeh.models import GraphRenderer, StaticLayoutProvider, Circle, ColumnDataSource, Range1d, LabelSet, Label
+
 from bokeh.palettes import Spectral8
 
 from graph import *
@@ -29,7 +30,7 @@ graph = GraphRenderer()
 
 graph.node_renderer.data_source.add(node_indices, 'index')
 graph.node_renderer.data_source.add(color_list, 'color')
-graph.node_renderer.glyph = Oval(height=10, width=10, fill_color='color')
+graph.node_renderer.glyph = Circle(size=25, fill_color='color') #radius also works / **kwargs
 
 # This is drawing the edges from start to end
 start_indexes = []
@@ -57,6 +58,22 @@ graph_layout = dict(zip(node_indices, zip(x, y)))
 graph.layout_provider = StaticLayoutProvider(graph_layout=graph_layout)
 
 plot.renderers.append(graph)
+
+source = ColumnDataSource(data=dict(height=[96, 71, 72, 68, 58, 62],
+                                    weight=[165, 189, 220, 141, 260, 174],
+                                    names=['Mark', 'Amir', 'Matt', 'Greg',
+                                           'Owen', 'Juan']))
+#create a new dict to use as a data source, with three lists in it, ordrered in the same way as vertexes
+# list of x values
+# list of y values
+# list of labels
+value = [v.value for v in graph_data.vertexes]
+label_source = ColumnDataSource(data=dict(x=x, y=y, v=value))
+
+labels = LabelSet(x='x', y='y', text='v', level='glyph',
+              source=label_source, text_align='center', text_baseline='middle', render_mode='canvas')
+
+plot.add_layout(labels)
 
 output_file('graph.html')
 show(plot)
